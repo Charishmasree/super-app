@@ -2,177 +2,223 @@
 
 import { useState } from "react";
 
-export default function Register() {
 
-  const [formData, setFormData] = useState({
-    name: "",
-    username: "",
-    email: "",
-    mobile: "",
-  });
+export default function Movies(){
+
+const [selectedMovie,setSelectedMovie] = useState<any>(null);
 
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+const movies = [
 
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
-
-  };
+{
+name:"Avatar",
+year:"2022",
+image:"https://m.media-amazon.com/images/I/81J6APjwxlL._AC_UF1000,1000_QL80_.jpg"
+},
 
 
-  const handleSubmit = () => {
-
-    if (
-      !formData.name ||
-      !formData.username ||
-      !formData.email ||
-      !formData.mobile
-    ) {
-
-      alert("Please fill all fields");
-      return;
-
-    }
+{
+name:"Avengers Endgame",
+year:"2019",
+image:"https://m.media-amazon.com/images/I/81ExhpBEbHL._AC_UF1000,1000_QL80_.jpg"
+},
 
 
-    localStorage.setItem(
-      "user",
-      JSON.stringify(formData)
-    );
+{
+name:"Interstellar",
+year:"2014",
+image:"https://m.media-amazon.com/images/I/91kFYg4fX3L._AC_UF1000,1000_QL80_.jpg"
+},
 
 
-    alert("Registration Successful");
-
-
-    window.location.href="/categories";
-
-  };
-
-
-  return (
-
-    <div
-      style={{
-        height:"100vh",
-        display:"flex",
-        justifyContent:"center",
-        alignItems:"center",
-        background:"#f2f5ff"
-      }}
-    >
-
-
-      <div
-        style={{
-          width:"350px",
-          padding:"30px",
-          background:"white",
-          borderRadius:"15px",
-          boxShadow:"0 5px 20px gray",
-          textAlign:"center"
-        }}
-      >
-
-
-        <h1>
-          Registration
-        </h1>
-
-
-        <input
-          style={inputStyle}
-          type="text"
-          name="name"
-          placeholder="Enter Name"
-          onChange={handleChange}
-        />
-
-
-        <input
-          style={inputStyle}
-          type="text"
-          name="username"
-          placeholder="Enter Username"
-          onChange={handleChange}
-        />
-
-
-        <input
-          style={inputStyle}
-          type="email"
-          name="email"
-          placeholder="Enter Email"
-          onChange={handleChange}
-        />
-
-
-        <input
-          style={inputStyle}
-          type="tel"
-          name="mobile"
-          placeholder="Enter Mobile Number"
-          onChange={handleChange}
-        />
-
-
-        <button
-          style={buttonStyle}
-          onClick={handleSubmit}
-        >
-          Register
-        </button>
-
-
-      </div>
-
-
-    </div>
-
-  );
+{
+name:"Joker",
+year:"2019",
+image:"https://m.media-amazon.com/images/I/71K4OH9D4rL._AC_UF1000,1000_QL80_.jpg"
 }
 
 
-
-const inputStyle = {
-
-  width:"100%",
-
-  padding:"12px",
-
-  margin:"10px 0",
-
-  border:"1px solid #ccc",
-
-  borderRadius:"8px",
-
-  fontSize:"16px"
-
-};
+];
 
 
 
-const buttonStyle = {
+return(
 
-  width:"100%",
+<div
+style={{
+minHeight:"100vh",
+padding:"30px",
+background:"#eef2ff"
+}}
+>
 
-  padding:"12px",
 
-  marginTop:"15px",
+<h1>
+Movies 🎬
+</h1>
 
-  background:"#2563eb",
 
-  color:"white",
 
-  border:"none",
+<div
+style={{
+display:"grid",
+gridTemplateColumns:"repeat(2,1fr)",
+gap:"20px"
+}}
+>
 
-  borderRadius:"8px",
 
-  fontSize:"16px",
+{
 
-  cursor:"pointer"
+movies.map((movie)=>(
 
-};
+
+<div
+
+key={movie.name}
+
+onClick={()=>setSelectedMovie(movie)}
+
+style={{
+background:"white",
+padding:"15px",
+borderRadius:"15px",
+boxShadow:"0 5px 15px gray",
+cursor:"pointer"
+}}
+
+>
+
+
+<img
+
+src={movie.image}
+
+alt={movie.name}
+
+style={{
+width:"100%",
+height:"300px",
+objectFit:"cover",
+borderRadius:"10px"
+}}
+
+/>
+
+
+
+<h2>
+{movie.name}
+</h2>
+
+
+<p>
+Year: {movie.year}
+</p>
+
+
+</div>
+
+
+))
+
+}
+
+
+</div>
+
+
+
+
+{
+selectedMovie &&
+
+<div
+
+style={{
+
+position:"fixed",
+top:0,
+left:0,
+
+width:"100%",
+height:"100%",
+
+background:"rgba(0,0,0,0.6)",
+
+display:"flex",
+justifyContent:"center",
+alignItems:"center"
+
+}}
+
+>
+
+
+<div
+
+style={{
+
+background:"white",
+padding:"30px",
+borderRadius:"15px",
+textAlign:"center"
+
+}}
+
+>
+
+
+<img
+
+src={selectedMovie.image}
+
+style={{
+width:"200px"
+}}
+
+/>
+
+
+<h1>
+{selectedMovie.name}
+</h1>
+
+
+<p>
+Movie Year: {selectedMovie.year}
+</p>
+
+
+<button
+
+onClick={()=>setSelectedMovie(null)}
+
+style={{
+padding:"10px",
+background:"red",
+color:"white",
+border:"none",
+borderRadius:"8px"
+}}
+
+>
+Close
+</button>
+
+
+
+</div>
+
+
+</div>
+
+
+}
+
+
+</div>
+
+)
+
+}
